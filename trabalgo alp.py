@@ -9,7 +9,7 @@ while resp != '0':
     print("#########################################################")
     print("#######  CADERNO VIRTUAL DE RECEITAS CULINARIAS   #######")  
     print("#########################################################")
-    print("#######           1 - Receita                     #######")
+    print("#######           1 - Receitas                    #######")
     print("#######           2 - Ingredientes                #######")
     print("#######           3 - Categoria                   #######")
     print("#######           4 - Dicas Culinárias            #######")
