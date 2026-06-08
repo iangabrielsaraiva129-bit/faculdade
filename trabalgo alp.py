@@ -3,6 +3,23 @@ import os
             ############# CADERNO VIRTUAL DE RECEITAS ###############
             #########################################################
 
+receitas = { 
+'Bolo de chocolate' : ['Bolo de chocolate', 'Farinha, açúcar, ovos, chocolate em pó, manteiga', 'Sobremesa', '1 hora', 'Bater os ingredientes, assar no forno']
+
+}
+
+ingredientes = {
+    'Ingrediente 1': ['Farinha de trigo', 'Finna', 'Utilize para bolos e pães']
+}
+
+categoria = {
+    'Sobremesa': 'Sobremesa'
+}   
+
+dicas = {
+    'Dica 1': ['Se o bolo que deu tanto trabalho queimou, não se desespere: passe um ralador de queijo côncavo na parte queimada até retirar a crosta.']
+}
+
 resp = ''
 while resp != '0':
     os.system('cls')
@@ -19,6 +36,7 @@ while resp != '0':
     resp = input("Escolha sua opção: ")
 
     if resp == "1":
+        os.system('cls')
         print()
         print("######################################################## ")
         print("#######             Receita                      ####### ")
@@ -29,67 +47,111 @@ while resp != '0':
         print("####### 4- Apagar Receita                        ####### ")
         print("####### 0- Voltar                                ####### ")
         print("######################################################## ")
-        resp2 = input("EScolha sua opção: ")
-        if resp2 == '1':
+        resp_r = input("EScolha sua opção: ")
+        
+        if resp_r == '1': 
             os.system('cls')
             print()
             print("############################################")
             print("#####           Nova Receita            ####")
             print("############################################")
             print()
-            nome = input("## Nome da receita: ")
+            rec = input("## Nome da receita: ")
             print()
-            ingredientes = input("## Ingredientes: ")
+            ing = input("## Ingredientes: ")
             print()
-            categoria = input("## Digite a categoria da receita: ")
+            cat = input("## Digite a categoria da receita: ")
             print()
             tempo = input("## Digite o tempo da receita: ")
             print()
             modo_p = input("## Modo de preparo: ")
-            print("#### Receita Adicionada! #### ")
             print()
+            receitas[rec] = [rec, ing, cat, tempo, modo_p]
+            print("## Receita cadastrada! ")
+            print()
+            print("## Receita: ", receitas[rec])
 
-        elif resp2 == '2':
+        elif resp_r == '2':
             os.system('cls')
             print()
             print("############################################")
             print("#####           Ver receita             ####")
             print("############################################")
             print()
-            print("## Nome: ", nome)
-            print("## Ingredientes: ", ingredientes)
-            print("## Categoria: ", categoria)
-            print("## Tempo: ", tempo)
-            print("## Modo de preparo: ", modo_p)
+            print("## Receitas cadastradas: ")
+            for r in receitas:
+                print("## ", r)
+                print()
+            rec = input("## Digite o nome da receita: ")
             print()
-
-        elif resp2 == '3':
+            if rec in receitas:
+                print("## Nome: ", receitas[rec][0])
+                print("## Ingredientes: ", receitas[rec][1])
+                print("## Categoria: ", receitas[rec][2])
+                print("## Tempo: ", receitas[rec][3])
+                print("## Modo de preparo: ", receitas[rec][4])
+            else:
+                print("## Nenhuma receita cadastrada! ")
+            print()
+            
+        elif resp_r == '3':
             os.system('cls')
             print()
             print("############################################")
             print("#####           Editar Receita          ####")
             print("############################################")
             print()
-            nome = input("## Nome da receita: ")
+            rec = input("## Nome da receita: ")
             print()
-            categoria = input("## Digite a categoria da receita: ")
-            print()
-            tempo = input("## Digite o tempo da receita: ")
-            print()
-            print("#### Receita Editada! ")
-            print()
+            if rec in receitas:
+                print("## Receita atual: ")
+                print("## Nome: ", receitas[rec][0])
+                print("## Ingredientes: ", receitas[rec][1])
+                print("## Categoria: ", receitas[rec][2])
+                print("## Tempo: ", receitas[rec][3])
+                print("## Modo de preparo: ", receitas[rec][4])
+                print()
 
-        elif resp2 == '4':
+                print("## Digite os novos dados da receita: ")
+                print()
+                rec = input("## Nome da receita: ")
+                ing = input("## Ingredientes: ")
+                cat = input("## Digite a categoria da receita: ")
+                tempo = input("## Digite o tempo da receita: ")
+                modo_p = input("## Modo de preparo: ")
+                receitas[rec] = [rec, ing, cat, tempo, modo_p]
+                print()
+                print("#### Receita Editada! ")
+                print()
+                print("## Receita atualizada: ", receitas[rec])
+
+        elif resp_r == '4':
             os.system('cls')
             print()
             print("############################################")
             print("#####           Exluir Receita          ####")
             print("############################################")
             print()
-            nome = input("## Nome da receita: ")
+            rec = input("## Nome da receita: ")
             print()
-            print("Receita Excluida:", nome)
-            print()
+            if rec in receitas:
+                print("## Nome: ", receitas[rec][0])
+                print("## Ingredientes: ", receitas[rec][1])
+                print("## Categoria: ", receitas[rec][2])
+                print("## Tempo: ", receitas[rec][3])
+                print("## Modo de preparo: ", receitas[rec][4])
+                print()
+                confirma = input("## Tem certeza que deseja excluir essa receita? (s/n): ")
+                if confirma.lower() == 's':
+                    del receitas[rec]
+                    print("## Receita Excluida! ")
+                    print()
+                    print("## Receita: ", receitas)
+                else:
+                    print("## Exclusão cancelada! ") 
+            else:
+                print("## Nenhuma receita cadastrada! ")
+
     
         print()
         input("Tecle <ENTER> para continuar...")  
@@ -105,67 +167,103 @@ while resp != '0':
         print("####### 4- Apagar Ingrediente                    ####### ")
         print("####### 0- Voltar                                ####### ")
         print("######################################################## ")
-        resp3 = input("Escolha sua resposta: ")
-        if resp3 == '1':
+        resp_i = input("Escolha sua resposta: ")
+
+        if resp_i == '1':
+            os.system('cls')
             print()
             print("############################################")
             print("#####      Adicionando Ingrediente      ####")
             print("############################################")
             print()
-            nome_i = input("## Nome do Ingrediente: ")
+
+            ing= input("## Nome do Ingrediente: ")
             print()
             marca_i = input("## Marca do ingrediente: ")
             print()
             obs_i = input("## Deixe uma observação sobre o ingrediente: ")
             print()
+            ingredientes[ing] = [ing, marca_i, obs_i]
+            print("## Ingrediente cadastrado! ")
+            print()
+            print("## Ingrediente: ", ingredientes[ing])
 
-        elif resp3 == '2':
+
+        elif resp_i == '2':
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Ver Ingrediente           ####")
             print("############################################")
-            print() 
-            print("## Nome:", nome_i)
-            print("## Marca:", marca_i)
-            print("## Observação:", obs_i)
             print()
-            nome_i = input("## Nome do Ingrediente: ")
+            for i in ingredientes:
+                print("## ", i)
+                print()
+            ing = input("## Nome do Ingrediente: ")
             print()
-            marca_i = input("## Marca do ingrediente: ")
-            print()
-            obs_i = input("## Observaçao do ingrediente: ")
-            print()
+            if ing in ingredientes:
+                print("## Nome:", ingredientes[ing][0])
+                print("## Marca:", ingredientes[ing][1])
+                print("## Observação:", ingredientes[ing][2])
+            else:
+                print("## Nenhum ingrediente cadastrado! ")
             
-        elif resp3 == '3':
+        elif resp_i == '3':
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Editar Ingrediente        ####")
             print("############################################")
             print() 
-            nome_i = input("## Nome do Ingrediente: ")
+            ing = input("## Digite o nome do ingrediente: ")
             print()
-            marca_i = input("## Marca do ingrediente: ")
-            print()
-            obs_i = input("## Observaçao do ingrediente: ")
-            print()
-            print("#### Ediçao feita! #### ")
-            print()
+            if ing in ingredientes:
+                print("## Ingrediente atual: ")
+                print("## Nome:", ingredientes[ing][0])
+                print("## Marca:", ingredientes[ing][1])
+                print("## Observação:", ingredientes[ing][2])
+                print()
+                print("## Digite os novos dados do ingrediente: ")
+                print()
+                ing = input("## Nome do Ingrediente: ")
+                marca_i = input("## Marca do ingrediente: ")
+                obs_i = input("## Deixe uma observação sobre o ingrediente: ")
+                ingredientes[ing] = [ing, marca_i, obs_i]
+                print()
+                print("## Ingrediente atualizado! ", ingredientes[ing])
+                print()
+                print("#### Ediçao feita! #### ")
+                print()
 
-        elif resp3 == '4':
+        elif resp_i == '4':
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Excluir Ingrediente       ####")
             print("############################################")
             print() 
-            nome_i = input("## Digite o nome do ingrediente: ")
+            ing = input("## Digite o nome do ingrediente: ")
             print()
-            print("Ingrediente Excluido!", nome_i)
-            print()
+            if ing in ingredientes:
+                print("## Nome:", ingredientes[ing][0])
+                print("## Marca:", ingredientes[ing][1])
+                print("## Observação:", ingredientes[ing][2])
+                print()
+                confirma = input("## Tem certeza que deseja excluir esse ingrediente? (s/n): ")
+                if confirma.lower() == 's':
+                    del ingredientes[ing]
+                    print("## Ingrediente Excluido! ")
+                    print()
+                    print("## Ingredientes: ", ingredientes)
+                else:
+                    print("## Exclusão cancelada! ")
+            else:
+                print("## Nenhum ingrediente cadastrado! ")
         
         print()
         input("Tecle <ENTER> para continuar...")
 
-    elif resp== '3': 
+    elif resp == '3': 
         print()
         print("########################################################")
         print("#######        Categoria de ingredientes         #######")
@@ -177,44 +275,77 @@ while resp != '0':
         print("####### 0- Voltar                                #######")
         print("########################################################")
         print()
-        resp4 = input("Escolha sua opção: ")
-        if resp4 == '1':
+        resp_c = input("Escolha sua opção: ")
+       
+        if resp_c == '1':
+            os.system('cls')
             print()
             print("############################################")
             print("#####     Adicionando Categoria         ####")
             print("############################################")
             print()
-            nome_c = input("## Digite o nome da categoria: ")
+            cat = input("## Digite o nome da categoria: ")
+            categoria[cat] = [cat]
             print()
         
-        elif resp4 == '2': 
+        elif resp_c == '2': 
+            os.system('cls')
             print()
             print("############################################")
             print("#####           Categoria               ####")
             print("############################################")
             print()
-            print("## Categoria: ", nome_c)
-            print()
+            print("## Categorias cadastradas: ")
+            for c in categoria:
+                print("## ", c)
+                print()
 
-        elif resp4 == '3':
+        elif resp_c == '3':
+            os.system('cls')
             print()
             print("############################################")
             print("#####       Editando  Categoria         ####")
             print("############################################")
             print()
-            nome_c = input("## Digite a categoria: ")
+            cat = input("## Digite a categoria atual: ")
             print()
+            if cat in categoria:
+                print("## Categoria atual: ", categoria[cat])
+                print()
+                print("## Digite a nova categoria: ")
+                print()
+                cat = input("## Digite o nome da categoria: ")
+                categoria[cat] = [cat]
+                print()
+                print("#### Categoria Editada! ", categoria[cat])
+                print()
+            else:
+                print("## Nenhuma categoria cadastrada! ")
+                print()
 
-        elif resp4 == '4':
+        elif resp_c == '4':
+            os.system('cls')
             print()
             print("############################################")
             print("#####        Exluir  Categoria          ####")
             print("############################################")
             print()
-            nome_c = input("## Digite o nome da categoria: ")
+            cat = input("## Digite a categoria: ")
             print()
-            print("Categoria Excluida!", nome_c)
-            print()
+            if cat in categoria:
+                print("## Categoria: ", categoria[cat])
+                print()
+                confirma = input("## Tem certeza que deseja excluir essa categoria? (s/n): ")
+                if confirma.lower() == 's':
+                    del categoria[cat]
+                    print("## Categoria Excluida! ")
+                    print()
+                    print("## Categoria: ", categoria)
+                else:
+                    print("## Exclusão cancelada! ")
+            else:
+                print("## Nenhuma categoria cadastrada! ")
+                print()
 
         print()
         input("Tecle <ENTER> para continuar...")
@@ -230,43 +361,87 @@ while resp != '0':
         print("####### 0- Voltar                                ####### ")
         print("########################################################")
         print()
-        resp5 = input("Escolha sua opçao: ")
-        if resp5 == '1':
+        resp_d = input("Escolha sua opçao: ")
+        print()
+        if resp_d == '1':
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Adicionando Dica          ####")
             print("############################################")
             print()
-            nome_d = input("## Digite sua Dica: ")
+            dica = input("## Digite sua Dica: ")
             print()
             print("Você adicionou uma dica! ")
+            dicas[dica] = [dica]
             print()
+            print("## Dica: ", dicas)
 
-        elif resp5 == '2':
+        elif resp_d == '2':
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Dica Culinária            ####")
             print("############################################")
             print()
-            print("## Sua dica culinária: ", nome_d)
-            print()
-        elif resp5 == '3':
+            print("## Dicas cadastradas: ")
+            for d in dicas:
+                print("## ", d)
+                print()
+            dica = input("## Digite a dica: ")
+            print() 
+            if dica in dicas:
+                print("## Dica: ", dicas[dica][0])
+                print()
+            else:
+                print("## Nenhuma dica cadastrada! ")
+                print()
+
+        elif resp_d == '3':
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Editando Dica             ####")
             print("############################################")
             print()
-            nome_d = input("## Digite sua dica (editando): ")
+            dica = input("## Digite sua dica: ")
             print()
-        elif resp5 == '4': 
+            if dica in dicas:
+                print("## Dica cadastrada:" )
+                print("## Dica: ", dicas)
+                print()
+                nova_dica = input("## Digite a nova Dica: ")
+                dicas[dica] = [nova_dica]
+                print()
+                print("#### Dica Editada! ", dicas)
+                print()
+            else:
+                print("## Nenhuma dica cadastrada! ")
+                print()
+                
+        elif resp_d == '4': 
+            os.system('cls')
             print()
             print("############################################")
             print("#####         Excluindo  Dica           ####")
             print("############################################")
             print()
-            nome_d = input("## Digite o nome da dica: ")
+            dica = input("## Digite o nome da dica: ")
             print()
-            print("Dica Excluida! ")
+            if dica in dicas:
+                print("## Dica: ", dicas[dica])
+                print()
+                confirma = input("## Tem certeza que deseja excluir essa dica? (s/n): ")
+                if confirma.lower() == 's':
+                    del dicas[dica]
+                    print("## Dica Excluida! ")
+                    print()
+                    print("## Dicas: ", dicas)
+                else:
+                    print("## Exclusão cancelada! ")
+            else:
+                print("## Nenhuma dica cadastrada! ")
+                print()
 
         print()
         input("Tecle <ENTER> para continuar...")
@@ -282,6 +457,7 @@ while resp != '0':
         print("################################################################## ")
         print()
         input("Tecle <ENTER> para continuar...")
+
     elif resp=='0':
         print()
         print("############################################")
