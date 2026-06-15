@@ -4,7 +4,7 @@ import os
             #########################################################
 
 receitas = { 
-'Bolo de chocolate' : ['Bolo de chocolate', 'Farinha, açúcar, ovos, chocolate em pó, manteiga', 'Sobremesa', '1 hora', 'Bater os ingredientes, assar no forno']
+    'Receita 1' : ['Bolo de chocolate', 'Farinha, açúcar, ovos, chocolate em pó, manteiga', 'Sobremesa', '1 hora', 'Bater os ingredientes, assar no forno']
 
 }
 
@@ -48,7 +48,7 @@ while resp != '0':
         print("####### 0- Voltar                                ####### ")
         print("######################################################## ")
         resp_r = input("EScolha sua opção: ")
-        
+        print()
         if resp_r == '1': 
             os.system('cls')
             print()
@@ -71,6 +71,14 @@ while resp != '0':
             print()
             print("## Receita: ", receitas[rec])
 
+            with open('receitas.txt', 'a') as arquivo:
+                    arquivo.write(rec + '\n')
+                    arquivo.write(ing + '\n')
+                    arquivo.write(cat + '\n')
+                    arquivo.write(tempo + '\n')
+                    arquivo.write(modo_p + '\n')
+
+
         elif resp_r == '2':
             os.system('cls')
             print()
@@ -78,9 +86,10 @@ while resp != '0':
             print("#####           Ver receita             ####")
             print("############################################")
             print()
-            print("## Receitas cadastradas: ")
-            for r in receitas:
-                print("## ", r)
+            tam = len(receitas)
+            print("## Receitas cadastradas: ", tam)
+            for receita in receitas:
+                print("## ", receita)
                 print()
             rec = input("## Digite o nome da receita: ")
             print()
@@ -93,7 +102,8 @@ while resp != '0':
             else:
                 print("## Nenhuma receita cadastrada! ")
             print()
-            
+
+
         elif resp_r == '3':
             os.system('cls')
             print()
@@ -111,10 +121,8 @@ while resp != '0':
                 print("## Tempo: ", receitas[rec][3])
                 print("## Modo de preparo: ", receitas[rec][4])
                 print()
-
                 print("## Digite os novos dados da receita: ")
-                print()
-                rec = input("## Nome da receita: ")
+                nome = input("## Nome da receita: ")
                 ing = input("## Ingredientes: ")
                 cat = input("## Digite a categoria da receita: ")
                 tempo = input("## Digite o tempo da receita: ")
@@ -176,7 +184,6 @@ while resp != '0':
             print("#####      Adicionando Ingrediente      ####")
             print("############################################")
             print()
-
             ing= input("## Nome do Ingrediente: ")
             print()
             marca_i = input("## Marca do ingrediente: ")
@@ -188,6 +195,10 @@ while resp != '0':
             print()
             print("## Ingrediente: ", ingredientes[ing])
 
+            with open('ingredientes.txt', 'a') as arquivo:
+                    arquivo.write(ing + '\n')
+                    arquivo.write(marca_i + '\n')
+                    arquivo.write(obs_i + '\n')
 
         elif resp_i == '2':
             os.system('cls')
@@ -196,8 +207,10 @@ while resp != '0':
             print("#####         Ver Ingrediente           ####")
             print("############################################")
             print()
-            for i in ingredientes:
-                print("## ", i)
+            tam = len(ingredientes)
+            print("## Ingredientes cadastrados: ", tam)
+            for ingrediente in ingredientes:
+                print("## ", ingrediente)
                 print()
             ing = input("## Nome do Ingrediente: ")
             print()
@@ -287,17 +300,22 @@ while resp != '0':
             cat = input("## Digite o nome da categoria: ")
             categoria[cat] = [cat]
             print()
+
+            with open('cateegorias.txt', 'a') as arquivo:
+                    arquivo.write(cat + '\n')
+                    
         
         elif resp_c == '2': 
             os.system('cls')
             print()
             print("############################################")
-            print("#####           Categoria               ####")
+            print("#####           Ver Categoria           ####")
             print("############################################")
             print()
-            print("## Categorias cadastradas: ")
-            for c in categoria:
-                print("## ", c)
+            tam = len(categoria)
+            print("## Categorias cadastradas: ", tam)
+            for categoria in categoria:
+                print("## ", categoria)
                 print()
 
         elif resp_c == '3':
@@ -377,6 +395,9 @@ while resp != '0':
             print()
             print("## Dica: ", dicas)
 
+            with open('dicas.txt', 'a') as arquivo:
+                    arquivo.write(dica + '\n')
+
         elif resp_d == '2':
             os.system('cls')
             print()
@@ -384,9 +405,10 @@ while resp != '0':
             print("#####         Dica Culinária            ####")
             print("############################################")
             print()
-            print("## Dicas cadastradas: ")
-            for d in dicas:
-                print("## ", d)
+            tam = len(dicas)
+            print("## Dicas cadastradas: ", tam)
+            for dica in dicas:
+                print("## ", dica)
                 print()
             dica = input("## Digite a dica: ")
             print() 
@@ -478,6 +500,6 @@ while resp != '0':
         print()
         input("Tecle <ENTER> para continuar...")
 
-print("Fim")
+print("Obrigado por utilizar o Caderno Virtual de Receitas Culinárias! ")
 
 
