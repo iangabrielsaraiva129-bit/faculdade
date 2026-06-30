@@ -124,7 +124,7 @@ def msg_inicial():
     print("######   CADERNO VIRTUAL DE RECEITAS CULINARIAS    ######")
     print("#########################################################")
 
-resp = ''
+resp = '' 
 while resp != '0':
     os.system('cls')
     msg_inicial()
@@ -695,13 +695,13 @@ print("Obrigado por utilizar o Caderno Virtual de Receitas Culinárias! ")
 
 arq_receitas = open("receitas.csv", "wt", encoding="utf-8")
 for rec, dados in receitas.items():
-    arq_receitas.write(f"{rec};{dados[1]}; {dados[2]}; {dados[3]}; {dados[4]}; {dados[5]}\n")
+    arq_receitas.write(f"{rec}; {dados[1]}; {dados[2]}; {dados[3]}; {dados[4]}; {dados[5]}\n")
 arq_receitas.close()
 
 
 arq_ingredientes = open("ingredientes.csv", "wt", encoding='utf-8')
 for ing, dados in ingredientes.items():
-    arq_ingredientes.write(f"{ing};{dados[1]}; {dados[2]}; {dados[3]}\n")
+    arq_ingredientes.write(f"{ing}; {dados[1]}; {dados[2]}; {dados[3]}\n")
 arq_ingredientes.close()
 
 
