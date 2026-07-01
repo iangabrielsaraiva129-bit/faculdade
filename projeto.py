@@ -1,122 +1,150 @@
 import os  
-import pickle
 
             #########################################################
             ############# CADERNO VIRTUAL DE RECEITAS ###############
             #########################################################
 
-receitas = {}
-try: 
-    arq_receitas = open("receitas.csv", "rt", encoding="utf-8")
+def recupera_receitas(): 
+    try:
+        receitas = {}
+        arq_receitas = open("receitas.csv", "rt", encoding="utf-8")
+        for linha in arq_receitas:
+            linha = linha.strip()
+            if linha:
+                campos = linha.split(';')
+                rec = campos[0]
+                ing = campos[1]
+                cat = campos[2]
+                tempo = campos[3]
+                modo_p = campos[4]
+                ativo = campos[5].strip() == "True"
+                receitas[rec] = [rec, ing, cat, tempo, modo_p, ativo]   
+        arq_receitas.close()
 
-    for linha in arq_receitas:
-        linha = linha.strip()
-        if linha:
-            campos = linha.split(';')
-            rec = campos[0]
-            ing = campos[1]
-            cat = campos[2]
-            tempo = campos[3]
-            modo_p = campos[4]
-            ativo = campos[5] == "True"
-            receitas[rec] = [rec, ing, cat, tempo, modo_p, ativo]
-    arq_receitas.close()
+    except:
+        receitas = { 
+            'Bolo de chocolate' : 
+                ['Bolo de chocolate', 
+                'Farinha, açúcar, ovos, chocolate em pó, manteiga', 
+                'Sobremesa', 
+                '60', 
+                'Bater os ingredientes, assar no forno', True],
+            
+            'Bolo de laranja' : 
+                ['Bolo de laranja',
+                '4 ovos, 2 xícaras de açúcar, 1 xícara de óleo, suco de 2 laranjas, casca de 1 laranja, 2 xícaras de farinha de trigo, 1 colher de fermento',
+                'Sobremesa',
+                '50',
+                'Bata os ovos, o açúcar, o óleo, o suco e a casca da laranja. Adicione a farinha, misture bem e acrescente o fermento. Coloque em uma forma untada e asse até dourar.', True],
+           
+            "Omelete": 
+                ["Omelete",
+                "2 ovos, 50g de queijo, 1 pitada de sal",
+                "Salgado",
+                "15",
+                "Bata os ovos, misture o queijo e o sal e frite em fogo baixo.", True],
 
-except:
-    receitas = { 
-        'Bolo de chocolate' : 
-            ['Bolo de chocolate', 
-            'Farinha, açúcar, ovos, chocolate em pó, manteiga', 
-            'Sobremesa', 
-            '60', 
-            'Bater os ingredientes, assar no forno', True],
+            "Macarrão ao Alho e Óleo": 
+                ["Macarrão ao Alho e Óleo",
+                "250g de macarrão, 3 dentes de alho, 2 colheres de sopa de azeite, sal a gosto",
+                "Salgado",
+                "30",
+                "Cozinhe o macarrão, doure o alho no azeite e misture tudo.", True],
+           
+            "Lasanha": 
+                ["Lasanha",
+                "500g de massa para lasanha, 300g de queijo muçarela, 300g de presunto, 500ml de molho de tomate",
+                "Salgado",
+                "60",
+                "Monte camadas de massa, molho, queijo e presunto. Repita as camadas e asse até dourar.", True]
+
+        }
+    return receitas
         
-        'Bolo de laranja' : 
-            ['Bolo de laranja',
-            '4 ovos, 2 xícaras de açúcar, 1 xícara de óleo, suco de 2 laranjas, casca de 1 laranja, 2 xícaras de farinha de trigo, 1 colher de fermento',
-            'Sobremesa',
-            '50',
-            'Bata os ovos, o açúcar, o óleo, o suco e a casca da laranja. Adicione a farinha, misture bem e acrescente o fermento. Coloque em uma forma untada e asse até dourar.', True],
-       
-        "Omelete": 
-            ["Omelete",
-            "2 ovos, 50g de queijo, 1 pitada de sal",
-            "Salgado",
-            "15",
-            "Bata os ovos, misture o queijo e o sal e frite em fogo baixo.", True],
 
-        "Macarrão ao Alho e Óleo": 
-            ["Macarrão ao Alho e Óleo",
-            "250g de macarrão, 3 dentes de alho, 2 colheres de sopa de azeite, sal a gosto",
-            "Salgado",
-            "30",
-            "Cozinhe o macarrão, doure o alho no azeite e misture tudo.", True],
-       
-        "Lasanha": 
-            ["Lasanha",
-            "500g de massa para lasanha, 300g de queijo muçarela, 300g de presunto, 500ml de molho de tomate",
-            "Salgado",
-            "60",
-            "Monte camadas de massa, molho, queijo e presunto. Repita as camadas e asse até dourar.", True]
+def recupera_ingredientes():
+    try:
+        ingredientes = {}
+        arq_ingredientes = open("ingredientes.csv", "rt", encoding='utf-8')
+        for linha in arq_ingredientes:
+            linha = linha.strip()
+            if linha:
+                campos = linha.split(";")
+                ing = campos[0]
+                marca_i = campos[1]
+                obs_i = campos[2]
+                ativo_1 = campos[3].strip() == "True"
+                ingredientes[ing] = [ing, marca_i, obs_i, ativo_1]
+        arq_ingredientes.close()
 
-    }
+    except:
+        ingredientes = {
+            'Farinha': ['Farinha de trigo', 'Finna', 'Utilize para bolos e pães', True],
+            'Açúcar': ["Açúcar refinado", "União", "Ideal para sobremesas e bebidas", True],
+            'Leite': ["Leite integral", "Itambé", "Conservar sob refrigeração após aberto", True]
+
+        }
+    return ingredientes
+
+
+def recupera_categorias():
+    try:
+        categorias = {}
+        arq_categorias = open("categorias.csv", "rt", encoding="utf-8")
+        for linha in arq_categorias:
+            linha = linha.strip()
+            if linha:
+                campos = linha.split(';')
+                cat = campos[0]
+                ativo_2 = campos[1].strip() == "True"
+                categorias[cat] = [cat, ativo_2]
+        arq_categorias.close()
+
+    except:
+        categorias = { 
+              'Lanche' : ['Lanche', True], 
+              'Massas' : ['Massas', True], 
+              'Sobremesa' : ['Sobremesa', True] 
+        }   
+    return categorias
+
+
+def gravar_receitas(receitas):
     arq_receitas = open("receitas.csv", "wt", encoding="utf-8")
     for rec, dados in receitas.items():
         arq_receitas.write(f"{rec}; {dados[1]}; {dados[2]}; {dados[3]}; {dados[4]}; {dados[5]}\n")
     arq_receitas.close()
 
-
-
-ingredientes = {}
-try:
-    arq_ingredientes = open("ingredientes.csv", "rt", encoding='utf-8')
-    for linha in arq_ingredientes:
-        linha = linha.strip()
-        if linha:
-            campos = linha.split(";")
-            ing = campos[0]
-            marca_i = campos[1]
-            obs_i = campos[2]
-            ativo_1 = campos[3] == "True"
-            ingredientes[ing] = [ing, marca_i, obs_i, ativo_1]
-    arq_ingredientes.close()
-
-except:
-    ingredientes = {
-        'Farinha': ['Farinha de trigo', 'Finna', 'Utilize para bolos e pães', True],
-        'Açúcar': ["Açúcar refinado", "União", "Ideal para sobremesas e bebidas", True],
-        'Leite': ["Leite integral", "Itambé", "Conservar sob refrigeração após aberto", True]
-
-    }
+def gravar_ingredientes(ingredientes):
     arq_ingredientes = open("ingredientes.csv", "wt", encoding='utf-8')
     for ing, dados in ingredientes.items():
         arq_ingredientes.write(f"{ing}; {dados[1]}; {dados[2]}; {dados[3]}\n")
     arq_ingredientes.close()
 
-
-
-categorias = {}
-try:
-    arq_categorias = open("categorias.csv", "rt", encoding="utf-8")
-    for linha in arq_categorias:
-        linha = linha.strip()
-        if linha:
-            campos = linha.split(';')
-            cat = campos[0]
-            ativo_2 = campos[1] == "True"
-            categorias[cat] = [cat, ativo_2]
-    arq_categorias.close()
-
-except:
-    categorias = { 
-          'Lanche' : ['Lanche', True], 
-          'Massas' : ['Massas', True], 
-          'Sobremesa' : ['Sobremesa', True] 
-    }   
+def gravar_categorias(categorias):
     arq_categorias = open("categorias.csv", "wt", encoding='utf-8' )
     for cat, dados in categorias.items():
         arq_categorias.write(f"{cat}; {dados[1]}\n")
     arq_categorias.close()
+
+
+def buscar_receita(receitas, nome):
+    for rec in receitas:
+     if rec.lower() == nome.lower():
+        return rec
+    return None
+
+def buscar_ingrediente(ingredientes, nome):
+    for ing in ingredientes:
+        if ing.lower() == nome.lower():
+            return ing
+    return None
+
+def buscar_categoria(categorias, nome):
+    for cat in categorias:
+        if cat.lower() == nome.lower():
+            return cat
+    return None
 
 def msg_inicial():
     print                  ("Bem vindo(a) ao:")
@@ -124,9 +152,13 @@ def msg_inicial():
     print("######   CADERNO VIRTUAL DE RECEITAS CULINARIAS    ######")
     print("#########################################################")
 
+receitas = recupera_receitas()
+ingredientes = recupera_ingredientes()
+categorias = recupera_categorias()
+
 resp = '' 
 while resp != '0':
-    os.system('cls')
+    os.system('cls' if os.name == 'nt' else 'clear')
     msg_inicial()
     print()
     print("#########################################################")
@@ -142,7 +174,7 @@ while resp != '0':
     resp = input("Escolha sua opção: ")
 
     if resp == "1":
-        os.system('cls')
+        os.system('cls' if os.name == 'nt' else 'clear')
         print()
         print("######################################################## ")
         print("#######                Receita                   ####### ")
@@ -157,7 +189,7 @@ while resp != '0':
         print()
 
         if resp_r == '1': 
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####         Cadastrar Receita        #####")
@@ -172,7 +204,12 @@ while resp != '0':
                 print()
                 cat = input("## Digite a categoria da receita: ")
                 print()
-                tempo = int(input("## Digite o tempo da receita(em minutos!): "))
+                while True:
+                    try:
+                        tempo = int(input("## Digite o tempo da receita em minutos (apenas números!): "))
+                        break
+                    except ValueError:
+                        print("## Erro: Digite apenas números!")
                 print()
                 modo_p = input("## Modo de preparo: ")
                 print()
@@ -184,7 +221,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_r == '2':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####         Consultar receita        #####")
@@ -198,29 +235,32 @@ while resp != '0':
                     print()
             rec = input("## Digite o nome da receita: ")
             print()
-            if rec in receitas and receitas[rec][5]:
-                print("## Nome: ", receitas[rec][0])
-                print("## Ingredientes: ", receitas[rec][1])
-                print("## Categoria: ", receitas[rec][2])
-                print("## Tempo: ", receitas[rec][3])
-                print("## Modo de preparo: ", receitas[rec][4])
+            chave = buscar_receita(receitas, rec)
+            if chave and receitas[chave][5]:
+                print("## Nome: ", receitas[chave][0])
+                print("## Ingredientes: ", receitas[chave][1])
+                print("## Categoria: ", receitas[chave][2])
+                print("## Tempo: ", receitas[chave][3])
+                print("## Modo de preparo: ", receitas[chave][4])
             else:
                 print("## Nenhuma receita cadastrada! ")
             print()
             input("Tecle <ENTER> para continuar...")
 
         elif resp_r == '3':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####           Editar Receita         #####")
             print("############################################")
             print()
             for rec in receitas:
-                print("-", rec)
+                if receitas[rec][5]:
+                    print("-", rec)
             print()
             rec = input("## Nome da receita: ")
             print()
+
             if rec in receitas:
                 print("## Receita atual: ")
                 print("- Nome: ", receitas[rec][0])
@@ -233,7 +273,12 @@ while resp != '0':
                 novo_rec = input("- Nome da receita: ")
                 ing = input("- Ingredientes: ")
                 cat = input("- Digite a categoria da receita: ")
-                tempo = input("- Digite o tempo da receita(em minutos): ")
+                while True:
+                    try:
+                        tempo = int(input("- Digite o tempo da receita em minutos (apenas números!): "))
+                        break
+                    except ValueError:
+                        print("## Erro: Digite apenas números!")
                 modo_p = input("- Modo de preparo: ")
                 del receitas[rec]
                 receitas[novo_rec] = [novo_rec, ing, cat, tempo, modo_p, True]
@@ -247,10 +292,10 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")  
 
         elif resp_r == '4':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
-            print("#####           Exluir Receita         #####")
+            print("#####           Excluir Receita        #####")
             print("############################################")
             print()
             for rec in receitas:
@@ -293,7 +338,7 @@ while resp != '0':
         resp_i = input("Escolha sua resposta: ")
 
         if resp_i == '1':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####       Cadastrar Ingrediente      #####")
@@ -316,7 +361,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_i == '2':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####       Consultar Ingrediente      #####")
@@ -329,27 +374,31 @@ while resp != '0':
                     print()
             ing = input("## Nome do Ingrediente: ")
             print()
-            if ing in ingredientes and ingredientes[ing][3]:
-                print("## Nome:", ingredientes[ing][0])
-                print("## Marca:", ingredientes[ing][1])
-                print("## Observação:", ingredientes[ing][2])
+            chave_ing = buscar_ingrediente(ingredientes, ing)
+            if chave_ing and ingredientes[chave_ing][3]:
+                print("## Nome:", ingredientes[chave_ing][0])
+                print("## Marca:", ingredientes[chave_ing][1])
+                print("## Observação:", ingredientes[chave_ing][2])
             else:
                 print("## Nenhum ingrediente cadastrado! ")
             print()
             input("Tecle <ENTER> para continuar...")
 
         elif resp_i == '3':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####         Editar Ingrediente       #####")
             print("############################################")
             print() 
             for ing in ingredientes:
-                print("-", ing)
+                if ingredientes[ing][3]:
+                    print("-", ing)
+
             print()
             ing = input("## Digite o nome do ingrediente: ")
             print()
+
             if ing in ingredientes:
                 print("## Ingrediente atual: ")
                 print("## Nome:", ingredientes[ing][0])
@@ -374,17 +423,20 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_i == '4':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####         Excluir Ingrediente      #####")
             print("############################################")
             print() 
             for ing in ingredientes:
-                print("-", ing)
+                if ingredientes[ing][3]:
+                    print("-", ing)
+
             print()
             ing = input("## Digite o nome do ingrediente: ")
             print()
+
             if ing in ingredientes:
                 print("## Nome:", ingredientes[ing][0])
                 print("## Marca:", ingredientes[ing][1])
@@ -418,7 +470,7 @@ while resp != '0':
         resp_c = input("Escolha sua opção: ")
 
         if resp_c == '1':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####       Cadastrar Categoria        #####")
@@ -435,7 +487,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_c == '2': 
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####        Consultar Categoria       #####")
@@ -447,12 +499,14 @@ while resp != '0':
                     print("- Categoria encontrada: ", categoria)
             print()
             cat = input("Digite a categoria: ")
-            if cat not in categorias or not categorias[cat][1]:
+            print()
+            chave_cat = buscar_categoria(categorias, cat)
+            if not chave_cat or not categorias[chave_cat][1]:
                 print("## Categoria não encontrada!")
             else:
                 encontrou = False
                 for receita in receitas:
-                    if receitas[receita][2] == cat and receitas[receita][5]:
+                    if receitas[receita][2] == chave_cat and receitas[receita][5]:
                         print("##", receitas[receita][0])
                         encontrou = True
                 if not encontrou:
@@ -462,17 +516,20 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_c == '3':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####        Editar  Categoria         #####")
             print("############################################")
             print()
             for cat in categorias:
-                print("-", cat)
+                if categorias[cat][1]:
+                    print("-", cat)
+                    
             print()
             cat = input("## Digite a categoria atual: ")
             print()
+
             if cat in categorias:
                 print("## Categoria atual: ", categorias[cat])
                 print()
@@ -482,7 +539,7 @@ while resp != '0':
                 categorias[nova_cat] = [nova_cat, True]
                 del categorias[cat]
                 print()
-                print("#### Categoria Editada! ", categorias[cat])
+                print("#### Categoria Editada! ", categorias[nova_cat])
                 print()
             else:
                 print("## Nenhuma categoria cadastrada! ")
@@ -490,17 +547,20 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_c == '4':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####          Exluir  Categoria       #####")
             print("############################################")
             print()
             for cat in categorias:
-                print("-", cat)
+                if categorias[cat][1]:
+                    print("-", cat)
+                    
             print()
             cat = input("## Digite a categoria: ")
             print()
+
             if cat in categorias:
                 print("## Categoria: ", categorias[cat])
                 print()
@@ -518,7 +578,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
     elif resp == '4':
-        os.system('cls')
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("################################################################ ")
         print("#######                    Relatório                     ####### ")
         print("################################################################ ")
@@ -534,6 +594,7 @@ while resp != '0':
         print()
 
         if resp_rel == '1' :
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####      Lista geral de receitas     #####")
@@ -556,6 +617,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
         
         elif resp_rel == '2': 
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####    Lista geral de ingredientes   #####")
@@ -576,6 +638,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_rel == '3':
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("############################################")
             print("#####    Lista geral de categorias     #####")
@@ -594,6 +657,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
         elif resp_rel == '4':
+            os.system('cls' if os.name == 'nt' else 'clear')
             print()
             print("###############################################################")
             print("#####    Lista geral de receitas por tempo de preparo     #####")
@@ -624,7 +688,7 @@ while resp != '0':
                 for receita in receitas:
                     tempo = int(receitas[receita][3])
 
-                    if tempo == tempo_max:
+                    if tempo == tempo_max and receitas[receita][5]:
                         print("Nome:", receitas[receita][0])
                         print("Tempo:", receitas[receita][3], "minutos")
                         print("-" * 50)
@@ -632,6 +696,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
         
         elif resp_rel == '5':
+
             print()
             print("###############################################################")
             print("#####       Lista geral de receitas por categoria         #####")
@@ -659,6 +724,7 @@ while resp != '0':
             input("Tecle <ENTER> para continuar...")
 
     elif resp=='5': 
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("################################################################## ")
         print("#######                    Informações                     ####### ")
         print("################################################################## ")
@@ -671,6 +737,7 @@ while resp != '0':
         input("Tecle <ENTER> para continuar...")
 
     elif resp=='0':
+        os.system('cls' if os.name == 'nt' else 'clear')
         print()
         print("############################################")
         print("#####  Você encerrou o programa, até logo! #")
@@ -692,20 +759,6 @@ while resp != '0':
 
 print("Obrigado por utilizar o Caderno Virtual de Receitas Culinárias! ")
 
-
-arq_receitas = open("receitas.csv", "wt", encoding="utf-8")
-for rec, dados in receitas.items():
-    arq_receitas.write(f"{rec}; {dados[1]}; {dados[2]}; {dados[3]}; {dados[4]}; {dados[5]}\n")
-arq_receitas.close()
-
-
-arq_ingredientes = open("ingredientes.csv", "wt", encoding='utf-8')
-for ing, dados in ingredientes.items():
-    arq_ingredientes.write(f"{ing}; {dados[1]}; {dados[2]}; {dados[3]}\n")
-arq_ingredientes.close()
-
-
-arq_categorias = open("categorias.csv", "wt", encoding='utf-8' )
-for cat, dados in categorias.items():
-    arq_categorias.write(f"{cat}; {dados[1]}\n")
-arq_categorias.close()
+gravar_receitas(receitas)
+gravar_ingredientes(ingredientes)
+gravar_categorias(categorias)
