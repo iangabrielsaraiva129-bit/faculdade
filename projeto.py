@@ -12,11 +12,11 @@ def recupera_receitas():
             linha = linha.strip()
             if linha:
                 campos = linha.split(';')
-                rec = campos[0]
-                ing = campos[1]
-                cat = campos[2]
-                tempo = campos[3]
-                modo_p = campos[4]
+                rec = campos[0].strip()
+                ing = campos[1].strip()
+                cat = campos[2].strip()
+                tempo = campos[3].strip()
+                modo_p = campos[4].strip()
                 ativo = campos[5].strip() == "True"
                 receitas[rec] = [rec, ing, cat, tempo, modo_p, ativo]   
         arq_receitas.close()
@@ -70,9 +70,9 @@ def recupera_ingredientes():
             linha = linha.strip()
             if linha:
                 campos = linha.split(";")
-                ing = campos[0]
-                marca_i = campos[1]
-                obs_i = campos[2]
+                ing = campos[0].strip()
+                marca_i = campos[1].strip()
+                obs_i = campos[2].strip()
                 ativo_1 = campos[3].strip() == "True"
                 ingredientes[ing] = [ing, marca_i, obs_i, ativo_1]
         arq_ingredientes.close()
@@ -95,7 +95,7 @@ def recupera_categorias():
             linha = linha.strip()
             if linha:
                 campos = linha.split(';')
-                cat = campos[0]
+                cat = campos[0].strip()
                 ativo_2 = campos[1].strip() == "True"
                 categorias[cat] = [cat, ativo_2]
         arq_categorias.close()
@@ -128,22 +128,22 @@ def gravar_categorias(categorias):
     arq_categorias.close()
 
 
-def buscar_receita(receitas, nome):
-    for rec in receitas:
-     if rec.lower() == nome.lower():
-        return rec
+def buscar_receita(receitas, rec):
+    for r in receitas:
+        if r.lower() == rec.lower():
+            return r
     return None
 
-def buscar_ingrediente(ingredientes, nome):
-    for ing in ingredientes:
-        if ing.lower() == nome.lower():
-            return ing
+def buscar_ingrediente(ingredientes, ing):
+    for i in ingredientes:
+        if i.lower() == ing.lower():
+            return i
     return None
 
-def buscar_categoria(categorias, nome):
-    for cat in categorias:
-        if cat.lower() == nome.lower():
-            return cat
+def buscar_categoria(categorias, cat):
+    for c in categorias:
+        if c.lower() == cat.lower():
+            return c
     return None
 
 def msg_inicial():
@@ -204,12 +204,7 @@ while resp != '0':
                 print()
                 cat = input("## Digite a categoria da receita: ")
                 print()
-                while True:
-                    try:
-                        tempo = int(input("## Digite o tempo da receita em minutos (apenas números!): "))
-                        break
-                    except ValueError:
-                        print("## Erro: Digite apenas números!")
+                tempo = int(input("## Digite o tempo da receita em minutos (apenas números!): "))
                 print()
                 modo_p = input("## Modo de preparo: ")
                 print()
@@ -273,12 +268,7 @@ while resp != '0':
                 novo_rec = input("- Nome da receita: ")
                 ing = input("- Ingredientes: ")
                 cat = input("- Digite a categoria da receita: ")
-                while True:
-                    try:
-                        tempo = int(input("- Digite o tempo da receita em minutos (apenas números!): "))
-                        break
-                    except ValueError:
-                        print("## Erro: Digite apenas números!")
+                tempo = int(input("- Digite o tempo da receita em minutos (apenas números!): "))
                 modo_p = input("- Modo de preparo: ")
                 del receitas[rec]
                 receitas[novo_rec] = [novo_rec, ing, cat, tempo, modo_p, True]
